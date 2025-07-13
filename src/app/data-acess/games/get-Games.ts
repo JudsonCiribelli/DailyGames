@@ -1,7 +1,8 @@
 export const GetDailyGames = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_API_URL}/next-api/?api=game_day`
+      `${process.env.NEXT_API_URL}/next-api/?api=game_day`,
+      { next: { revalidate: 320 } }
     );
     console.log(res);
     return res.json();
