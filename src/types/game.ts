@@ -1,9 +1,9 @@
 export interface DailyGamesProps {
-  id: string;
+  id: number;
   title: string;
   description: string;
   image_url: string;
-  plataforms: string[];
+  platforms: string[];
   categories: string[];
   release: string;
 }
