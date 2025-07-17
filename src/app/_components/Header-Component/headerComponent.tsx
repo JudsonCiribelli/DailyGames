@@ -14,7 +14,10 @@ const HeaderComponent = () => {
         <Link href="/" className="p-1  rounded-lg border-1 font-medium text-sm">
           Games
         </Link>
-        <Link href="/" className="p-1  rounded-lg border-1 font-medium text-sm">
+        <Link
+          href="/profile"
+          className="p-1  rounded-lg border-1 font-medium text-sm"
+        >
           Perfil
         </Link>
       </div>
