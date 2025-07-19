@@ -3,57 +3,10 @@ import { GetData } from "@/app/data-acess/games/get-Data";
 import { GetDailyGames } from "@/app/data-acess/games/get-Games";
 import { DailyGamesProps } from "@/types/game";
 import { CircleArrowRight } from "lucide-react";
-import { Metadata } from "next";
+
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-
-interface MetadataParams {
-  params: {
-    id: number;
-  };
-}
-export const generateMetadata = async ({
-  params,
-}: MetadataParams): Promise<Metadata> => {
-  try {
-    const response: DailyGamesProps = await fetch(
-      `${process.env.NEXT_API_URL}/next-api/?api=game&id=${params.id}`,
-      { next: { revalidate: 320 } }
-    )
-      .then((res) => {
-        res.json();
-      })
-      .catch(() => {
-        return {
-          title: "Daily Games - Descubra novos jogos",
-        };
-      });
-    return {
-      title: response.title,
-      description: `${response.description.slice(0, 100)}...`,
-      openGraph: {
-        title: response.title,
-        images: [response.image_url],
-      },
-      robots: {
-        index: true,
-        follow: true,
-        nocache: true,
-        googleBot: {
-          index: true,
-          follow: true,
-          noimageindex: true,
-        },
-      },
-    };
-  } catch (err) {
-    console.log(err);
-    return {
-      title: "Daily Games - Descubra novos jogos",
-    };
-  }
-};
 
 const GameDetails = async ({ params: { id } }: { params: { id: number } }) => {
   const data: DailyGamesProps = await GetData(id);
@@ -62,7 +15,6 @@ const GameDetails = async ({ params: { id } }: { params: { id: number } }) => {
   if (!data) {
     redirect("/");
   }
-  console.log(data);
 
   return (
     <main className="w-full">
@@ -83,7 +35,7 @@ const GameDetails = async ({ params: { id } }: { params: { id: number } }) => {
             <div className="flex mb-4">
               {data.categories.map((item) => (
                 <div
-                  key={data.id}
+                  key={item}
                   className="bg-slate-300 mr-1 p-1 rounded-lg border-1"
                 >
                   <p>{item}</p>
@@ -95,7 +47,7 @@ const GameDetails = async ({ params: { id } }: { params: { id: number } }) => {
             <div className="flex mb-4">
               {data.platforms.map((item) => (
                 <div
-                  key={data.id}
+                  key={item}
                   className="bg-slate-300 mr-1 p-1 rounded-lg border-1"
                 >
                   <p>{item}</p>

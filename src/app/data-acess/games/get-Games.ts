@@ -4,7 +4,6 @@ export const GetDailyGames = async () => {
       `${process.env.NEXT_API_URL}/next-api/?api=game_day`,
       { next: { revalidate: 320 } }
     );
-    console.log(res);
     return res.json();
   } catch (err) {
     console.log(err);
