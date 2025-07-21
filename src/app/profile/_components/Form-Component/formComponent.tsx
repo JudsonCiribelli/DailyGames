@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const SignSchema = z.object({
   email: z.string().email({ message: "Email inválido" }),
@@ -26,6 +28,7 @@ type LoginSchema = z.infer<typeof SignSchema>;
 const FormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(SignSchema),
@@ -35,13 +38,31 @@ const FormComponent = () => {
     },
   });
 
-  const handleLoginUser = async () => {
-    console.log(form);
+  const handleLoginUser = async (formData: LoginSchema) => {
+    await authClient.signIn.email(
+      {
+        email: formData.email,
+        password: formData.password,
+        callbackURL: "/",
+      },
+      {
+        onRequest: (ctx) => {
+          console.log(ctx);
+        },
+        onResponse: (ctx) => {
+          console.log(ctx);
+          router.replace("/");
+        },
+        onError: (ctx) => {
+          console.log(ctx.error.message);
+        },
+      }
+    );
   };
 
   return (
     <Form {...form}>
-      <form onSubmit={handleLoginUser} className="space-y-6">
+      <form onSubmit={form.handleSubmit(handleLoginUser)} className="space-y-6">
         <FormField
           control={form.control}
           name="email"
