@@ -17,7 +17,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 const SignSchema = z.object({
-  email: z.string().email({ message: "Email inválido" }),
+  email: z.string().nonempty({ message: "Email inválido" }),
   password: z
     .string()
     .min(6, { message: "A senha deve ter pelo menos 6 caracteres" }),
@@ -49,7 +49,7 @@ const FormComponent = () => {
         onRequest: (ctx) => {
           console.log(ctx);
         },
-        onResponse: (ctx) => {
+        onSuccess: (ctx) => {
           console.log(ctx);
           router.replace("/");
         },
@@ -58,6 +58,7 @@ const FormComponent = () => {
         },
       }
     );
+    console.log(formData);
   };
 
   return (
