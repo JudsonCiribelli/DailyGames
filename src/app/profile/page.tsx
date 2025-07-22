@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Share } from "lucide-react";
 import CardComponent from "./_components/Card-Component/cardComponent";
 import { Metadata } from "next";
+import FormComponent from "./_components/Form-Component/formComponent";
+import Link from "next/link";
 
 export const MetadaProfile: Metadata = {
   title: "Meu perfil - Daily Games",
@@ -45,6 +47,30 @@ const ProfilePage = () => {
           </div>
         </section>
       </Container>
+      <div className="flex mt-40 mb-10 flex-col items-center justify-center p-4">
+        <div className="w-full max-w-md space-y-8">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold">Login</h1>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Entre com suas credenciais para acessar sua conta
+            </p>
+          </div>
+
+          <FormComponent />
+
+          <div className="text-center text-sm">
+            <p>
+              Não tem uma conta?{" "}
+              <Link
+                href="/"
+                className="font-medium text-primary hover:underline"
+              >
+                Cadastre-se
+              </Link>
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };

@@ -22,7 +22,7 @@ const HeaderComponent = () => {
         </Link>
       </div>
       <div>
-        <Link href="/formData">
+        <Link href="/profile">
           <GameControllerIcon size={32} />
         </Link>
       </div>
